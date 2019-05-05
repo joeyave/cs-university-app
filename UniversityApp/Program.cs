@@ -5,131 +5,100 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace UniversityApp
-{  
+{
     class Program
     {
         static void Main(string[] args)
         {
-            Exam ex1 = new Exam("Calculus",                 3, new DateTime(2019, 07, 02));
-            Exam ex2 = new Exam("C#",                       5, new DateTime(2019, 07, 08));
-            Exam ex3 = new Exam("C++",                      5, new DateTime(2019, 06, 28));
-            Exam ex4 = new Exam("Discrete mathematics",     5, new DateTime(2019, 07, 10));
-            Exam ex5 = new Exam("Requirements Engineering", 3, new DateTime(2019, 06, 05));
-            Exam ex6 = new Exam("History",                  2, new DateTime(2019, 06, 15));
+
+            //Exam ex1 = new Exam("Calculus", 3, new DateTime(2019, 07, 02));
+            //Exam ex2 = new Exam("C#", 5, new DateTime(2019, 07, 08));
+            //Exam ex3 = new Exam("C++", 5, new DateTime(2019, 06, 28));
+            //Exam ex4 = new Exam("Discrete mathematics", 5, new DateTime(2019, 07, 10));
+            //Exam ex5 = new Exam("Requirements Engineering", 3, new DateTime(2019, 06, 05));
+            //Exam ex6 = new Exam("History", 2, new DateTime(2019, 06, 15));
+
+            //// 1
+            //Console.WriteLine("\n****** First Excersize ******");
+
+            //Student s1 = new Student("Vlas", "Novokhatnii", new DateTime(2001, 12, 12), Education.Bachelor, 1);
+            //Console.WriteLine(s1.ToShortString());
+
+            //// 2
+            //Console.WriteLine("\n****** Second Excersize ******");
+
+            //s1.Exams = new List<Exam> { ex1, ex2 };
+            //Console.WriteLine(s1.ToShortString());
+
+            //// 3
+            //Console.WriteLine("\n****** Third Excersize ******");
+
+            //s1.AddExams(ex3, ex4, ex5, ex6);
+            //Console.WriteLine(s1.ToString());
 
             // 1
-            Console.WriteLine("\n****** First Excersize ******");
+            Person p1 = new Person("Vlas", "Novokhatnii", new DateTime(2001, 12, 12));
+            Person p2 = new Person("Vlas", "Novokhatnii", new DateTime(2001, 12, 12));
 
-            Student s1 = new Student();
-            Console.WriteLine(s1.ToShortString());
+
+            Console.WriteLine($"Equals: {p1 == p2}");
+            Console.WriteLine($"\nReferenceEquals: {ReferenceEquals(p1, p2)}");
+            Console.WriteLine($"\np1: {p1} \nHC: {p1.GetHashCode()} \np2: {p2} \nHC: {p2.GetHashCode()}");
 
             // 2
-            Console.WriteLine("\n****** Second Excersize ******");
+            Exam ex1 = new Exam("Calculus", 3, new DateTime(2019, 07, 02));
+            Exam ex2 = new Exam("C#", 5, new DateTime(2019, 07, 08));
+            Exam ex3 = new Exam("C++", 5, new DateTime(2019, 06, 28));
 
-            s1.Person = new Person("Vlas", "Novokhatnii", new DateTime(2001, 12, 12));
-            s1.Education = Education.Bachelor;
-            s1.Form = 1;
-            s1.ExamInfo = new Exam[] { ex1, ex2 };      
-            Console.WriteLine(s1.ToString());
+            Test ts1 = new Test("Term 1. Discrete mathematics", true);
+            Test ts2 = new Test("Term 2. Calculus", true);
+
+            Student st = new Student("Igor", "Zapor", new DateTime(2002, 01, 01), Education.Bachelor, 1);
+            st.AddExams(ex1, ex2);
+            st.AddTests(ts1, ts2);
+
+            Console.WriteLine(st.ToString());
 
             // 3
-            Console.WriteLine("\n****** Third Excersize ******");
+            Console.WriteLine(st.Person);
 
-            s1.AddExams(ex3, ex4, ex5, ex6);
-            Console.WriteLine(s1.ToString());
+            // 4
+            Student stcpy = (Student)st.DeepCopy();
 
-            int rows;
-            int cols;
+            st.Name = "Changed";
+            st.BirthDate = new DateTime(2000, 05, 05);
+            st.Degree = Education.SecondEducation;
+            st.Form = 2;
+            st.AddExams(ex3);
+            st.AddTests(ts1);
+            
+            Console.WriteLine("\n------After changes.------");
+            Console.WriteLine(st.ToString());
+            Console.WriteLine(stcpy.ToString());
 
-            bool checkParse;
-
-            do
+            // 5
+            try
             {
-                checkParse = true;
-
-                Console.WriteLine("Input number of rows and columns. Use <,> < > or <;>.");
-                string str = Console.ReadLine();
-                string[] strConcat = str.Split(' ', ',', ';');
-
-             
-                if (!int.TryParse(strConcat[0], out rows) | rows <= 0 & !int.TryParse(strConcat[1], out cols) | cols <= 0)
-                {
-                    Console.WriteLine($"{strConcat[0]} or {strConcat[1]} doesn't match. Try again.");
-                    checkParse = false;
-                }
-            } while (checkParse == false);
-
-            int square = rows * cols;
-
-            // 1D array
-            Exam[] arr1D = new Exam[square];
-
-            // 2D array
-            Exam[,] arr2D = new Exam[rows, cols];
-
-            // Jagged array
-            Exam[][] jaggedArr = new Exam[rows][];
-            for (int i = 0; i < rows; i++)
-                jaggedArr[i] = new Exam[cols];
-
-
-            // Initialising
-            for (int i = 0; i < arr1D.Length; i++)
+                st.Form = -1;
+            }
+            catch(Exception e)
             {
-                arr1D[i] = new Exam();
+                Console.WriteLine("Message: {0}", e.Message);
             }
 
-            for (int i = 0; i < arr2D.GetLength(0); i++)
+            // 6
+            foreach(var obj in st.GetTestsAndExams())
             {
-                for (int j = 0; j < arr2D.GetLength(1); j++)
-                {
-                    arr2D[i, j] = new Exam();
-                }
+                Console.WriteLine(obj);
             }
 
-            for (int i = 0; i < jaggedArr.Length; i++)
+            // 7
+            Console.WriteLine("\n***** Ex. 7 *****");
+
+            foreach(Exam ex in st.GetExamsWithMark(3))
             {
-                for (int j = 0; j < jaggedArr[i].Length; j++)
-                {
-                    jaggedArr[i][j] = new Exam();
-                }
+                Console.WriteLine(ex);
             }
-
-
-            //Time checking
-            int start = Environment.TickCount;            
-            for (int i = 0; i < arr1D.Length; i++)
-            {
-                arr1D[i].Subject = "HAHAHA";
-            }
-            int end = Environment.TickCount;
-
-            Console.WriteLine("One-dimensoinal array used {0} ms.", end - start);
-
-            start = Environment.TickCount;
-            for (int i = 0; i < arr2D.GetLength(0); i++)
-            {
-                for (int j = 0; j < arr2D.GetLength(1); j++)
-                {
-                    arr2D[i, j].Subject = "HAHAHA";
-                }
-            }
-            end = Environment.TickCount;
-
-            Console.WriteLine("Two-dimensoinal array used {0} ms.", end - start);
-
-            start = Environment.TickCount;
-            for (int i = 0; i < jaggedArr.Length; i++)
-            {
-                for (int j = 0; j < jaggedArr[i].Length; j++)
-                {
-                    jaggedArr[i][j].Subject = "HAHAHA";
-                }
-            }
-            end = Environment.TickCount;
-
-            Console.WriteLine("Jagged array used {0} ms.", end - start);
-
             Console.ReadLine();
         }
     }

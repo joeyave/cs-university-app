@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace UniversityApp
 {
-    class Person
+    class Person : IDateAndCopy
     {
-        // Fields
-        private string studentName;
-        private string studentSurname;
-        private DateTime studentBirthDate;
-
+        // Field Data
+        protected string studentName;
+        protected string studentSurname;
+        protected DateTime studentBirthDate;
+        
         // Constructors
         public Person(string currName, string currSurname, DateTime currBirthDate)
         {
@@ -26,16 +26,35 @@ namespace UniversityApp
         // Methods
         public override string ToString()
         {
-            return  "Name: "          + Name +
-                    "\nSurname: "     + Surname +
-                    "\nBirth Date: "  + BirthDate.ToShortDateString() +
-                    "\nBirth Year: "  + BirthYear;
+            return $"Name: {Name}, Surname: {Surname}, Birthday: {BirthDate.ToShortDateString()}, Birth Year: {BirthYear}";
         }
 
         public virtual string ToShortString()
         {
-            return  "Name: "        + Name +
-                    "\nSurname: "   + Surname;
+            return "Name: " + Name +
+                    "\nSurname: " + Surname;
+        }
+
+        public override bool Equals(object obj) => obj?.ToString() == ToString();
+
+        public static bool operator ==(Person p1, Person p2) => p1.Equals(p2);
+
+        public static bool operator !=(Person p1, Person p2) => p1.Equals(p2);
+
+        public override int GetHashCode() => ToString().GetHashCode();
+
+        public virtual object DeepCopy()
+        {
+            // First get a shallow copy
+            Person newPerson = (Person)this.MemberwiseClone();
+
+            // Then fill in the gaps
+            DateTime currBirthDate =
+                new DateTime(this.studentBirthDate.Year, this.studentBirthDate.Month, 
+                this.studentBirthDate.Day);
+            newPerson.BirthDate = currBirthDate;
+
+            return newPerson;
         }
 
         // Properties
@@ -64,5 +83,7 @@ namespace UniversityApp
                 studentBirthDate = new DateTime(value, studentBirthDate.Month, studentBirthDate.Day);
             }
         }
+
+        public DateTime Date { get; set; }
     }
 }
