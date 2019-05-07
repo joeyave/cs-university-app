@@ -123,6 +123,30 @@ namespace UniversityApp
             }
         }
 
+        public IEnumerator GetEnumerator()
+        {
+            string[] strTests = new string[Tests.Count];
+            string[] strExams = new string[Exams.Count];
+
+            int i = 0;
+            foreach(Test ts in Tests)
+            {
+                strTests[i] = ts.TestName;
+                i++;
+            }
+
+            int j = 0;
+            foreach (Exam ex in Exams)
+            {
+                strExams[j] = ex.Subject;
+                j++;
+            }
+
+            string[] both = strExams.Intersect(strTests).ToArray();
+
+            return new StudentEnumerator(both);
+        }
+
         // Properties
         public Education Degree
         {

@@ -26,9 +26,9 @@ namespace UniversityApp
             Exam ex2 = new Exam("C#", 5, new DateTime(2019, 07, 08));
             Exam ex3 = new Exam("C++", 5, new DateTime(2019, 06, 28));
 
-            Test ts1 = new Test("Theoretical Test. Discrete mathematics", true);
-            Test ts2 = new Test("Practical Test. Calculus", true);
-            Test ts3 = new Test("Theoretical Test. Calculus", false);
+            Test ts1 = new Test("Discrete mathematics", true);
+            Test ts2 = new Test("Calculus", true);
+            Test ts3 = new Test("C++", false);
 
             Student st = new Student("Igor", "Zapor", new DateTime(2001, 01, 05), Education.Bachelor, 1);
             st.AddExams(ex1, ex2);
@@ -80,7 +80,6 @@ namespace UniversityApp
 
             // 7
             Console.WriteLine("\n********** 7 **********");
-
             try
             {
                 foreach (Exam ex in st.GetExamsWithMark(0))
@@ -93,6 +92,13 @@ namespace UniversityApp
                 Console.WriteLine("Message: {0}", e.Message);
             }
 
+            // 8
+            Console.WriteLine("\n********** 8 **********");
+            Console.WriteLine("Subjects that are in Tests and Exams:");
+            foreach(var subj in st)
+            {
+                Console.WriteLine(subj);
+            }
             Console.ReadLine();
         }
     }
