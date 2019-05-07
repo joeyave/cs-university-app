@@ -12,8 +12,8 @@ namespace UniversityApp
         // Field Data
         private Education degree;
         private int form;
-        private List<Test> tests;
-        private List<Exam> exams;
+        private List<Test> tests = new List<Test>();
+        private List<Exam> exams = new List<Exam>();
 
         // Constructors
         public Student(string stName, string stSurname, DateTime stBirthDate,
@@ -27,29 +27,9 @@ namespace UniversityApp
         public Student() : base() { }
 
         // Methods
-        public void AddExams(params Exam[] exams)
-        {
-            if (Exams == null)
-            {
-                Exams = exams.ToList();
-            }
-            else
-            {
-                Exams.AddRange(exams);
-            }
-        }
+        public void AddExams(params Exam[] exams) => Exams.AddRange(exams);
 
-        public void AddTests(params Test[] tests)
-        {
-            if (Tests == null)
-            {
-                Tests = tests.ToList();
-            }
-            else
-            {
-                Tests.AddRange(tests);
-            }
-        }
+        public void AddTests(params Test[] tests) => Tests.AddRange(tests);
 
         public override string ToString()
         {
@@ -115,7 +95,7 @@ namespace UniversityApp
                 ArrayList mergedList = new ArrayList(Tests);
                 mergedList.AddRange(Exams);
 
-                foreach(var obj in mergedList)
+                foreach (var obj in mergedList)
                 {
                     yield return obj;
                 }
@@ -124,13 +104,18 @@ namespace UniversityApp
 
         public IEnumerable GetExamsWithMark(int mark)
         {
+            if (mark > 5 || mark < 1)
+            {
+                throw new Exception("Mark out of range");
+            }
+
             return actualImplementation();
 
             IEnumerable actualImplementation()
             {
-                foreach(Exam ex in Exams)
+                foreach (Exam ex in Exams)
                 {
-                    if(ex.Mark > mark)
+                    if (ex.Mark > mark)
                     {
                         yield return ex;
                     }
@@ -150,7 +135,7 @@ namespace UniversityApp
             get => form;
             set
             {
-                if(value > 100 || value < 1)
+                if (value > 100 || value < 1)
                 {
                     throw new Exception("Out of range.");
                 }
@@ -181,7 +166,7 @@ namespace UniversityApp
             }
             set
             {
-                this.Person = value;
+                new Person(value.Name, value.Surname, value.BirthDate);
             }
         }
 
@@ -201,6 +186,5 @@ namespace UniversityApp
                 return temp / Exams.Count;
             }
         }
-
     }
 }

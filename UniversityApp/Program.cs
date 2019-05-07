@@ -10,35 +10,10 @@ namespace UniversityApp
     {
         static void Main(string[] args)
         {
-
-            //Exam ex1 = new Exam("Calculus", 3, new DateTime(2019, 07, 02));
-            //Exam ex2 = new Exam("C#", 5, new DateTime(2019, 07, 08));
-            //Exam ex3 = new Exam("C++", 5, new DateTime(2019, 06, 28));
-            //Exam ex4 = new Exam("Discrete mathematics", 5, new DateTime(2019, 07, 10));
-            //Exam ex5 = new Exam("Requirements Engineering", 3, new DateTime(2019, 06, 05));
-            //Exam ex6 = new Exam("History", 2, new DateTime(2019, 06, 15));
-
-            //// 1
-            //Console.WriteLine("\n****** First Excersize ******");
-
-            //Student s1 = new Student("Vlas", "Novokhatnii", new DateTime(2001, 12, 12), Education.Bachelor, 1);
-            //Console.WriteLine(s1.ToShortString());
-
-            //// 2
-            //Console.WriteLine("\n****** Second Excersize ******");
-
-            //s1.Exams = new List<Exam> { ex1, ex2 };
-            //Console.WriteLine(s1.ToShortString());
-
-            //// 3
-            //Console.WriteLine("\n****** Third Excersize ******");
-
-            //s1.AddExams(ex3, ex4, ex5, ex6);
-            //Console.WriteLine(s1.ToString());
-
             // 1
-            Person p1 = new Person("Vlas", "Novokhatnii", new DateTime(2001, 12, 12));
-            Person p2 = new Person("Vlas", "Novokhatnii", new DateTime(2001, 12, 12));
+            Console.WriteLine("\n********** 1 **********");
+            Person p1 = new Person("Vlas", "Novokhatnii", new DateTime(2001, 01, 12));
+            Person p2 = new Person("Vlas", "Novokhatnii", new DateTime(2001, 01, 12));
 
 
             Console.WriteLine($"Equals: {p1 == p2}");
@@ -46,37 +21,47 @@ namespace UniversityApp
             Console.WriteLine($"\np1: {p1} \nHC: {p1.GetHashCode()} \np2: {p2} \nHC: {p2.GetHashCode()}");
 
             // 2
+            Console.WriteLine("\n********** 2 **********");
             Exam ex1 = new Exam("Calculus", 3, new DateTime(2019, 07, 02));
             Exam ex2 = new Exam("C#", 5, new DateTime(2019, 07, 08));
             Exam ex3 = new Exam("C++", 5, new DateTime(2019, 06, 28));
 
-            Test ts1 = new Test("Term 1. Discrete mathematics", true);
-            Test ts2 = new Test("Term 2. Calculus", true);
+            Test ts1 = new Test("Theoretical Test. Discrete mathematics", true);
+            Test ts2 = new Test("Practical Test. Calculus", true);
+            Test ts3 = new Test("Theoretical Test. Calculus", false);
 
-            Student st = new Student("Igor", "Zapor", new DateTime(2002, 01, 01), Education.Bachelor, 1);
+            Student st = new Student("Igor", "Zapor", new DateTime(2001, 01, 05), Education.Bachelor, 1);
             st.AddExams(ex1, ex2);
             st.AddTests(ts1, ts2);
 
             Console.WriteLine(st.ToString());
 
             // 3
+            Console.WriteLine("\n********** 3 **********");
             Console.WriteLine(st.Person);
 
             // 4
+            Console.WriteLine("\n********** 4 **********");
             Student stcpy = (Student)st.DeepCopy();
 
-            st.Name = "Changed";
-            st.BirthDate = new DateTime(2000, 05, 05);
+            Console.WriteLine("Before changes:");
+            Console.WriteLine(st.ToString());
+            Console.WriteLine(stcpy.ToString());
+
+            st.Name = "NewName";
+            st.Surname = "NewSurname";
+            st.BirthDate = new DateTime(2001, 01, 01);
             st.Degree = Education.SecondEducation;
-            st.Form = 2;
+            st.Form = 10;
             st.AddExams(ex3);
-            st.AddTests(ts1);
+            st.AddTests(ts3);
             
-            Console.WriteLine("\n------After changes.------");
+            Console.WriteLine("\nAfter changes:");
             Console.WriteLine(st.ToString());
             Console.WriteLine(stcpy.ToString());
 
             // 5
+            Console.WriteLine("\n********** 5 **********");
             try
             {
                 st.Form = -1;
@@ -87,18 +72,27 @@ namespace UniversityApp
             }
 
             // 6
-            foreach(var obj in st.GetTestsAndExams())
+            Console.WriteLine("\n********** 6 **********");
+            foreach (var obj in st.GetTestsAndExams())
             {
                 Console.WriteLine(obj);
             }
 
             // 7
-            Console.WriteLine("\n***** Ex. 7 *****");
+            Console.WriteLine("\n********** 7 **********");
 
-            foreach(Exam ex in st.GetExamsWithMark(3))
+            try
             {
-                Console.WriteLine(ex);
+                foreach (Exam ex in st.GetExamsWithMark(0))
+                {
+                    Console.WriteLine(ex);
+                }
             }
+            catch(Exception e)
+            {
+                Console.WriteLine("Message: {0}", e.Message);
+            }
+
             Console.ReadLine();
         }
     }
