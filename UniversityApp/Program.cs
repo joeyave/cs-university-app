@@ -22,13 +22,13 @@ namespace UniversityApp
 
             // 2
             Console.WriteLine("\n********** 2 **********");
-            Exam ex1 = new Exam("Calculus", 3, new DateTime(2019, 07, 02));
+            Exam ex1 = new Exam("Calculus", 2, new DateTime(2019, 07, 02));
             Exam ex2 = new Exam("C#", 5, new DateTime(2019, 07, 08));
             Exam ex3 = new Exam("C++", 5, new DateTime(2019, 06, 28));
 
-            Test ts1 = new Test("Discrete mathematics", true);
+            Test ts1 = new Test("C#", true);
             Test ts2 = new Test("Calculus", true);
-            Test ts3 = new Test("C++", false);
+            Test ts3 = new Test("C++", true);
 
             Student st = new Student("Igor", "Zapor", new DateTime(2001, 01, 05), Education.Bachelor, 1);
             st.AddExams(ex1, ex2);
@@ -98,6 +98,21 @@ namespace UniversityApp
             foreach(var subj in st)
             {
                 Console.WriteLine(subj);
+            }
+
+            // 9
+            Console.WriteLine("\n********** 9 **********");
+            Console.WriteLine("Passed Tests and Exams: ");
+            foreach(var subj in st.GetPassedTestsAndExams())
+            {
+                Console.WriteLine(subj);
+            }
+            // 10
+            Console.WriteLine("\n********** 10 **********");
+            Console.WriteLine("Passed Tests with Exams: ");
+            foreach(Test ts in st.GetPassedTestsWithExams())
+            {
+                Console.WriteLine(ts);
             }
             Console.ReadLine();
         }

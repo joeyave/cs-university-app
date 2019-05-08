@@ -147,6 +147,56 @@ namespace UniversityApp
             return new StudentEnumerator(both);
         }
 
+        public IEnumerable GetPassedTestsAndExams()
+        {
+            return actualImplementation();
+
+            IEnumerable actualImplementation()
+            {
+                ArrayList mergedList = new ArrayList();
+
+                foreach(Test ts in Tests)
+                {
+                    if(ts.IsPassed == true)
+                    {
+                        mergedList.Add(ts);
+                    }
+                }
+
+                foreach (Exam ex in Exams)
+                {
+                    if(ex.Mark > 2)
+                    {
+                        mergedList.Add(ex);
+                    }
+                }
+
+                foreach (object obj in mergedList)
+                {
+                    yield return obj;
+                }
+            }
+        }
+
+        public IEnumerable GetPassedTestsWithExams()
+        {
+            return actualImplementation();
+
+            IEnumerable actualImplementation()
+            {
+                foreach(Test ts in Tests)
+                {
+                    foreach(Exam ex in Exams)
+                    {
+                        if(ts.TestName == ex.Subject && ts.IsPassed == true && ex.Mark > 2)
+                        {
+                            yield return ts;
+                        }
+                    }
+                }
+            }
+        }
+
         // Properties
         public Education Degree
         {
