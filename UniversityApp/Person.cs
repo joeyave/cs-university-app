@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UniversityApp
 {
-    class Person : IDateAndCopy
+    class Person : IDateAndCopy, IComparable
     {
         // Field Data
         protected string studentName;
@@ -55,6 +55,15 @@ namespace UniversityApp
             newPerson.BirthDate = currBirthDate;
 
             return newPerson;
+        }
+
+        public int CompareTo(object obj)
+        {
+            Person temp = obj as Person;
+            if (temp != null)        
+                return this.studentSurname.CompareTo(obj);
+            else
+                throw new ArgumentException("Parameter is not a Person.");
         }
 
         // Properties
