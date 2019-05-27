@@ -58,9 +58,8 @@ namespace UniversityApp
 
         public int CompareTo(object obj)
         {
-            Person temp = obj as Person;
-            if (temp != null)        
-                return this.studentSurname.CompareTo(obj);
+            if (obj is Person temp)        
+                return this.studentSurname.CompareTo(temp.Surname);
             else
                 throw new ArgumentException("Parameter is not a Person.");
         }
@@ -106,5 +105,11 @@ namespace UniversityApp
         }
 
         public DateTime Date { get; set; }
+
+        public static IComparer<Person> SortByBirthDate
+        { get { return (IComparer<Person>)new Person(); } }
+
+        public static IComparable SortBySurname
+        { get { return (IComparable)new Person(); } }
     }
 }
