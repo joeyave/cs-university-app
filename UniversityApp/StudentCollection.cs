@@ -50,6 +50,6 @@ namespace UniversityApp
         }
 
         // Properties
-        public List<Student> ListOfStudents { get; set; }
+        public List<Student> ListOfStudents { get; set; } = new List<Student>();
     }
 }

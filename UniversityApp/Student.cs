@@ -62,12 +62,12 @@ namespace UniversityApp
             }
 
 
-            return "\n" + base.ToString() + $"\nDegree: {Degree}, Form: {Form}\n" + strEx + strTs;
+            return "\n" + base.ToString() + $"\n[Degree: {Degree}; Form: {Form}]\n" + strEx + strTs;
         }
 
         public virtual new string ToShortString()
         {
-            return base.ToShortString() + $"\nDegree: {Degree} \nForm: {Form} \nAverage Mark = {AvgMark}\n";
+            return base.ToShortString() + $"\n[Degree: {Degree}; Form: {Form}; Average Mark = {AvgMark}]\n";
 
         }
 
@@ -260,5 +260,8 @@ namespace UniversityApp
                 return temp / Exams.Count;
             }
         }
+
+        public static IComparer<Student> SortByAvgMark
+        { get { return (IComparer<Student>)new StudentAvgMarkComparer(); } }
     }
 }

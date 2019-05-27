@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UniversityApp
 {
-    class Person : IDateAndCopy, IComparable
+    class Person : IDateAndCopy, IComparable, IComparer<Person>
     {
         // Field Data
         protected string studentName;
@@ -26,13 +26,12 @@ namespace UniversityApp
         // Methods
         public override string ToString()
         {
-            return $"Name: {Name}, Surname: {Surname}, Birthday: {BirthDate.ToShortDateString()}, Birth Year: {BirthYear}";
+            return $"[Name: {Name}, Surname: {Surname}, Birthday: {BirthDate.ToShortDateString()}, Birth Year: {BirthYear}]";
         }
 
         public virtual string ToShortString()
         {
-            return "Name: " + Name +
-                    "\nSurname: " + Surname;
+            return $"[Name: {Name}; Surname: {Surname}]";
         }
 
         public override bool Equals(object obj) => obj?.ToString() == ToString();
@@ -64,6 +63,19 @@ namespace UniversityApp
                 return this.studentSurname.CompareTo(obj);
             else
                 throw new ArgumentException("Parameter is not a Person.");
+        }
+
+        public int Compare(Person p1, Person p2)
+        {
+            if (p1?.BirthDate > p2?.BirthDate)
+            {
+                return 1;
+            }
+            if (p1?.BirthDate < p2?.BirthDate)
+            {
+                return -1;
+            }
+            return 0;
         }
 
         // Properties
