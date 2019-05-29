@@ -106,10 +106,7 @@ namespace UniversityApp
 
         public DateTime Date { get; set; }
 
-        public static IComparer<Person> SortByBirthDate
-        { get { return (IComparer<Person>)new Person(); } }
-
-        public static IComparable SortBySurname
-        { get { return (IComparable)new Person(); } }
+        //public static IComparer<Person> SortByBirthDate
+        //{ get { return (IComparer<Person>)new Person(); } }
     }
 }

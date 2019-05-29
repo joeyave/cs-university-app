@@ -69,7 +69,7 @@ namespace UniversityApp
             Console.WriteLine("-----------------------------------------------------");
             Console.WriteLine("***** Sort by Date Birth *****");
             Console.WriteLine("-----------------------------------------------------");
-            students.ListOfStudents.Sort(Person.SortByBirthDate);
+            students.ListOfStudents.Sort(Student.SortByBirthDate);
 
             foreach (Student st in students.ListOfStudents)
             {
@@ -84,6 +84,18 @@ namespace UniversityApp
             {
                 Console.WriteLine(st.ToShortString());
             }
+
+            // 3 
+            Console.WriteLine("Input the number of the elements in the collections: ");
+
+            int num;
+            while(!int.TryParse(Console.ReadLine(), out num))
+            {
+                Console.WriteLine("Wrong input. Only integers. Try again: ");
+            }
+
+            TestCollections test = new TestCollections(num);
+            test.GetSearchTime();
 
             Console.ReadLine();
         }

@@ -263,5 +263,8 @@ namespace UniversityApp
 
         public static IComparer<Student> SortByAvgMark
         { get { return (IComparer<Student>)new StudentAvgMarkComparer(); } }
+
+        public static IComparer<Person> SortByBirthDate
+        { get { return (IComparer<Person>)new Person(); } }
     }
 }
