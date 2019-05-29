@@ -76,6 +76,7 @@ namespace UniversityApp
             Console.WriteLine($"The search took {ticksThisTime} ticks.");
 
             // Dictionary of Students with Person Key
+            // By Key
             timePerParse = Stopwatch.StartNew();
             contains = dictPersonStudent.ContainsKey(GetStudent(firstElementIndex).Person);
             timePerParse.Stop();
@@ -84,6 +85,16 @@ namespace UniversityApp
             Console.WriteLine($"Dictionary of Students with Person Key contains " +
                 $"{GetStudent(firstElementIndex).Person.ToString()} element. {contains}");
             Console.WriteLine($"The search took {ticksThisTime} ticks.");
+
+            // By Value
+            timePerParse = Stopwatch.StartNew();
+            contains = dictPersonStudent.ContainsValue(GetStudent(firstElementIndex));
+            timePerParse.Stop();
+            ticksThisTime = timePerParse.ElapsedTicks;
+
+            Console.WriteLine($"Dictionary of Students with Person Key contains " +
+                $"{GetStudent(firstElementIndex).Person.ToString()} element. {contains}");
+            Console.WriteLine($"The search by value took {ticksThisTime} ticks.");
 
             // Dictionary of Students with string Key
             timePerParse = Stopwatch.StartNew();
@@ -119,6 +130,7 @@ namespace UniversityApp
             Console.WriteLine($"The search took {ticksThisTime} ticks.");
 
             // Dictionary of Students with Person Key
+            // By Key
             timePerParse = Stopwatch.StartNew();
             contains = dictPersonStudent.ContainsKey(GetStudent(middleElementIndex).Person);
             timePerParse.Stop();
@@ -127,6 +139,16 @@ namespace UniversityApp
             Console.WriteLine($"Dictionary of Students with Person Key contains " +
                 $"{GetStudent(middleElementIndex).Person.ToString()} element. {contains}");
             Console.WriteLine($"The search took {ticksThisTime} ticks.");
+
+            // By Value
+            timePerParse = Stopwatch.StartNew();
+            contains = dictPersonStudent.ContainsValue(GetStudent(middleElementIndex));
+            timePerParse.Stop();
+            ticksThisTime = timePerParse.ElapsedTicks;
+
+            Console.WriteLine($"Dictionary of Students with Person Key contains " +
+                $"{GetStudent(firstElementIndex).Person.ToString()} element. {contains}");
+            Console.WriteLine($"The search by value took {ticksThisTime} ticks.");
 
             // Dictionary of Students with string Key
             timePerParse = Stopwatch.StartNew();
@@ -161,6 +183,7 @@ namespace UniversityApp
             Console.WriteLine($"The search took {ticksThisTime} ticks.");
 
             // Dictionary of Students with Person Key
+            // By Key
             timePerParse = Stopwatch.StartNew();
             contains = dictPersonStudent.ContainsKey(GetStudent(lastElementIndex).Person);
             timePerParse.Stop();
@@ -169,6 +192,16 @@ namespace UniversityApp
             Console.WriteLine($"Dictionary of Students with Person Key contains " +
                 $"{GetStudent(lastElementIndex).Person.ToString()} element. {contains}");
             Console.WriteLine($"The search took {ticksThisTime} ticks.");
+
+            // By Value
+            timePerParse = Stopwatch.StartNew();
+            contains = dictPersonStudent.ContainsValue(GetStudent(lastElementIndex));
+            timePerParse.Stop();
+            ticksThisTime = timePerParse.ElapsedTicks;
+
+            Console.WriteLine($"Dictionary of Students with Person Key contains " +
+                $"{GetStudent(firstElementIndex).Person.ToString()} element. {contains}");
+            Console.WriteLine($"The search by value took {ticksThisTime} ticks.");
 
             // Dictionary of Students with string Key
             timePerParse = Stopwatch.StartNew();
@@ -203,6 +236,7 @@ namespace UniversityApp
             Console.WriteLine($"The search took {ticksThisTime} ticks.");
 
             // Dictionary of Students with Person Key
+            // By Key
             timePerParse = Stopwatch.StartNew();
             contains = dictPersonStudent.ContainsKey(GetStudent(fakeElementIndex).Person);
             timePerParse.Stop();
@@ -211,6 +245,16 @@ namespace UniversityApp
             Console.WriteLine($"Dictionary of Students with Person Key contains " +
                 $"{GetStudent(fakeElementIndex).Person.ToString()} element. {contains}");
             Console.WriteLine($"The search took {ticksThisTime} ticks.");
+
+            // By Value
+            timePerParse = Stopwatch.StartNew();
+            contains = dictPersonStudent.ContainsValue(GetStudent(fakeElementIndex));
+            timePerParse.Stop();
+            ticksThisTime = timePerParse.ElapsedTicks;
+
+            Console.WriteLine($"Dictionary of Students with Person Key contains " +
+                $"{GetStudent(firstElementIndex).Person.ToString()} element. {contains}");
+            Console.WriteLine($"The search by value took {ticksThisTime} ticks.");
 
             // Dictionary of Students with string Key
             timePerParse = Stopwatch.StartNew();
