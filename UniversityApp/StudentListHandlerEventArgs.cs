@@ -24,7 +24,7 @@ namespace UniversityApp
 
         public override string ToString()
         {
-            return base.ToString();
+            return $"[Collection Name: {CollectionName}, Collection Changes: {CollectionChanges}. Student: {GetStudent}.\n";
         }
     }
 }

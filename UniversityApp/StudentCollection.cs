@@ -12,11 +12,8 @@ namespace UniversityApp
         public delegate void StudentListHandler(object source, StudentListHandlerEventArgs args);
 
         // Events
-        public event StudentListHandler StudentCountChanged;
+        public event StudentListHandler StudentsCountChanged;
         public event StudentListHandler StudentRefferenceChanged;
-
-        // Fields
-        private List<Student> listOfStudents = new List<Student>();
 
         // Constructors
 
@@ -35,10 +32,12 @@ namespace UniversityApp
                 Education.Bachelor, 2)
             };
 
+            ListOfStudents.AddRange(students);
+
             foreach(Student st in students)
             {
-                StudentCountChanged?.Invoke(this,
-                    new StudentListHandlerEventArgs("ListOfStudents", "Default students were added.", st));
+                StudentsCountChanged?.Invoke(this,
+                    new StudentListHandlerEventArgs("ListOfStudents", "Default students were added", st));
             }
         }
 
@@ -47,8 +46,8 @@ namespace UniversityApp
             ListOfStudents.AddRange(students);
             foreach(Student st in students)
             {
-                StudentCountChanged?.Invoke(this,
-                new StudentListHandlerEventArgs("ListOfStudents", "Some students were added.", st));
+                StudentsCountChanged?.Invoke(this,
+                new StudentListHandlerEventArgs("ListOfStudents", "Some students were added", st));
             }
             
         }
@@ -57,9 +56,10 @@ namespace UniversityApp
         {
             try
             {
-                listOfStudents.RemoveAt(j);
-                StudentCountChanged?.Invoke(this,
-                    new StudentListHandlerEventArgs("ListOfStudents", "Student was removed.", ListOfStudents[j]));
+                StudentsCountChanged?.Invoke(this,
+                    new StudentListHandlerEventArgs("ListOfStudents", "Student was removed", ListOfStudents[j]));
+                ListOfStudents.RemoveAt(j);
+                
             }
             catch (ArgumentOutOfRangeException ex)
             {
@@ -92,7 +92,7 @@ namespace UniversityApp
         }
 
         // Properties
-        public List<Student> ListOfStudents { get; set; }
+        public List<Student> ListOfStudents { get; set; } = new List<Student>();
         public string CollectionName { get; set; }
 
         // Indexator.
@@ -103,7 +103,7 @@ namespace UniversityApp
             {
                 ListOfStudents[index] = value;
 
-                StudentRefferenceChanged?.Invoke(this, new StudentListHandlerEventArgs("ListOfStudents", "The element was changed.", value));
+                StudentRefferenceChanged?.Invoke(this, new StudentListHandlerEventArgs("ListOfStudents", $"The {index} element was changed", value));
             }
         }
     }

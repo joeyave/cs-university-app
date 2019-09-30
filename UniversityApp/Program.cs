@@ -10,110 +10,49 @@ namespace UniversityApp
     {
         static void Main(string[] args)
         {
-            // 1
-            Console.WriteLine("\n********** 1 **********");
-            Person p1 = new Person("Vlas", "Novokhatnii", new DateTime(2001, 01, 12));
-            Person p2 = new Person("Vlas", "Novokhatnii", new DateTime(2001, 01, 12));
+            StudentCollection col1 = new StudentCollection();
+            StudentCollection col2 = new StudentCollection();
 
+            Journal j1 = new Journal();
+            Journal j2 = new Journal();
 
-            Console.WriteLine($"Equals: {p1 == p2}");
-            Console.WriteLine($"\nReferenceEquals: {ReferenceEquals(p1, p2)}");
-            Console.WriteLine($"\np1: {p1} \nHC: {p1.GetHashCode()} \np2: {p2} \nHC: {p2.GetHashCode()}");
+            col1.StudentsCountChanged += j1.CountChanged;
+            col1.StudentRefferenceChanged += j1.RefferenceChanged;
 
-            // 2
-            Console.WriteLine("\n********** 2 **********");
-            Exam ex1 = new Exam("Calculus", 2, new DateTime(2019, 07, 02));
-            Exam ex2 = new Exam("C#", 5, new DateTime(2019, 07, 08));
-            Exam ex3 = new Exam("C++", 5, new DateTime(2019, 06, 28));
+            col1.StudentRefferenceChanged += j2.CountChanged;
+            col2.StudentRefferenceChanged += j2.RefferenceChanged;
 
-            Test ts1 = new Test("C#", true);
-            Test ts2 = new Test("Calculus", true);
-            Test ts3 = new Test("C++", true);
-
-            Student st = new Student("Igor", "Zapor", new DateTime(2001, 01, 05), Education.Bachelor, 1);
-            st.AddExams(ex1, ex2);
-            st.AddTests(ts1, ts2);
-
-            Console.WriteLine(st.ToString());
-
-            // 3
-            Console.WriteLine("\n********** 3 **********");
-            Console.WriteLine(st.Person);
-
-            // 4
-            Console.WriteLine("\n********** 4 **********");
-            Student stcpy = (Student)st.DeepCopy();
-
-            Console.WriteLine("Before changes:");
-            Console.WriteLine(st.ToString());
-            Console.WriteLine(stcpy.ToString());
-
-            st.Name = "NewName";
-            st.Surname = "NewSurname";
-            st.BirthDate = new DateTime(2001, 01, 01);
-            st.Degree = Education.SecondEducation;
-            st.Form = 10;
-            st.AddExams(ex3);
-            st.AddTests(ts3);
-            
-            Console.WriteLine("\nAfter changes:");
-            Console.WriteLine(st.ToString());
-            Console.WriteLine(stcpy.ToString());
-
-            // 5
-            Console.WriteLine("\n********** 5 **********");
-            try
+            Student[] students =
             {
-                st.Form = -1;
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine("Message: {0}", e.Message);
-            }
+                new Student("Michael", "Cavin", new DateTime(1942, 08, 27), Education.Specialist, 1),
+                new Student("Marsha", "Brown", new DateTime(1941, 07, 15), Education.Specialist, 2),
+                new Student("Dale", "Troncoso", new DateTime(1970, 10, 19), Education.Bachelor, 3)
 
-            // 6
-            Console.WriteLine("\n********** 6 **********");
-            foreach (var obj in st.GetTestsAndExams())
-            {
-                Console.WriteLine(obj);
-            }
+            };
 
-            // 7
-            Console.WriteLine("\n********** 7 **********");
-            try
-            {
-                foreach (Exam ex in st.GetExamsWithMark(0))
-                {
-                    Console.WriteLine(ex);
-                }
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine("Message: {0}", e.Message);
-            }
+            col1.AddDefaults();
+            col1.AddStudents(students);
+            col1.Remove(2);
+            col1.Remove(5);
+            col1[3] = new Student("777", "777", new DateTime(7, 7, 7), Education.Bachelor, 7);
+            col1[4] = new Student("777", "777", new DateTime(7, 7, 7), Education.Bachelor, 7);
+            col1.AddStudents(new Student("777", "777", new DateTime(7, 7, 7), Education.Bachelor, 7));
 
-            // 8
-            Console.WriteLine("\n********** 8 **********");
-            Console.WriteLine("Subjects that are in Tests and Exams:");
-            foreach(var subj in st)
-            {
-                Console.WriteLine(subj);
-            }
+            col2.AddDefaults();
+            col2.AddStudents(students);
+            col2.Remove(1);
+            col2.Remove(3);
+            col2.Remove(6);
+            col2[1] = new Student("777", "777", new DateTime(7, 7, 7), Education.Bachelor, 7);
+            col2.AddStudents(new Student("777", "777", new DateTime(7, 7, 7), Education.Bachelor, 7));
+            col2[4] = new Student("777", "777", new DateTime(7, 7, 7), Education.Bachelor, 7);
 
-            // 9
-            Console.WriteLine("\n********** 9 **********");
-            Console.WriteLine("Passed Tests and Exams: ");
-            foreach(var subj in st.GetPassedTestsAndExams())
-            {
-                Console.WriteLine(subj);
-            }
-            // 10
-            Console.WriteLine("\n********** 10 **********");
-            Console.WriteLine("Passed Tests with Exams: ");
-            foreach(Test ts in st.GetPassedTestsWithExams())
-            {
-                Console.WriteLine(ts);
-            }
+            Console.WriteLine("***** First Journal *****");
+            Console.WriteLine(j1.ToString());
+
+            Console.WriteLine("***** Second Journal *****");
+            Console.WriteLine(j2.ToString());
+
             Console.ReadLine();
         }
     }
