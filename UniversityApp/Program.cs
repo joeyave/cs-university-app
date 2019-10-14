@@ -11,7 +11,9 @@ namespace UniversityApp
         static void Main(string[] args)
         {
             StudentCollection col1 = new StudentCollection();
+            col1.CollectionName = "col1";
             StudentCollection col2 = new StudentCollection();
+            col2.CollectionName = "col2";
 
             Journal j1 = new Journal();
             Journal j2 = new Journal();
@@ -27,7 +29,6 @@ namespace UniversityApp
                 new Student("Michael", "Cavin", new DateTime(1942, 08, 27), Education.Specialist, 1),
                 new Student("Marsha", "Brown", new DateTime(1941, 07, 15), Education.Specialist, 2),
                 new Student("Dale", "Troncoso", new DateTime(1970, 10, 19), Education.Bachelor, 3)
-
             };
 
             col1.AddDefaults();

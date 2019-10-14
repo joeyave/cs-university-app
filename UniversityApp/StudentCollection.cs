@@ -37,7 +37,7 @@ namespace UniversityApp
             foreach(Student st in students)
             {
                 StudentsCountChanged?.Invoke(this,
-                    new StudentListHandlerEventArgs("ListOfStudents", "Default students were added", st));
+                    new StudentListHandlerEventArgs($"{CollectionName}", "Default students were added", st));
             }
         }
 
@@ -47,7 +47,7 @@ namespace UniversityApp
             foreach(Student st in students)
             {
                 StudentsCountChanged?.Invoke(this,
-                new StudentListHandlerEventArgs("ListOfStudents", "Some students were added", st));
+                new StudentListHandlerEventArgs($"{CollectionName}", "Some students were added", st));
             }
             
         }
@@ -57,9 +57,8 @@ namespace UniversityApp
             try
             {
                 StudentsCountChanged?.Invoke(this,
-                    new StudentListHandlerEventArgs("ListOfStudents", "Student was removed", ListOfStudents[j]));
+                    new StudentListHandlerEventArgs($"{CollectionName}", "Student was removed", ListOfStudents[j])); ;
                 ListOfStudents.RemoveAt(j);
-                
             }
             catch (ArgumentOutOfRangeException ex)
             {
@@ -103,7 +102,7 @@ namespace UniversityApp
             {
                 ListOfStudents[index] = value;
 
-                StudentRefferenceChanged?.Invoke(this, new StudentListHandlerEventArgs("ListOfStudents", $"The {index} element was changed", value));
+                StudentRefferenceChanged?.Invoke(this, new StudentListHandlerEventArgs($"{CollectionName}", $"The {index} element was changed", value));
             }
         }
     }
