@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace UniversityApp
 {
-    class Student : Person, IDateAndCopy
+    public class Student<TKey> : Person, IDateAndCopy, INotifyPropertyChanged
     {
         // Field Data
         private Education degree;
@@ -15,13 +17,20 @@ namespace UniversityApp
         private List<Test> tests = new List<Test>();
         private List<Exam> exams = new List<Exam>();
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        // This method is called by the Set accessor of ... property.  
+        // The CallerMemberName attribute that is applied to the optional propertyName
+        // parameter causes the property name of the caller to be substituted as an argument.  
+
         // Constructors
         public Student(string stName, string stSurname, DateTime stBirthDate,
-            Education stDegree, int stForm)
+            Education stDegree, int stForm, TKey key)
             : base(stName, stSurname, stBirthDate)
         {
             Degree = stDegree;
             Form = stForm;
+            Key = key;
         }
 
         public Student() : base() { }
@@ -74,7 +83,7 @@ namespace UniversityApp
         public override object DeepCopy()
         {
             // First get a shallow copy
-            Student newStudent = (Student)this.MemberwiseClone();
+            Student<TKey> newStudent = (Student<TKey>)this.MemberwiseClone();
 
             // Then fill in the gaps
             List<Exam> currExams = new List<Exam>(this.Exams);
@@ -201,7 +210,11 @@ namespace UniversityApp
         public Education Degree
         {
             get => degree;
-            set => degree = value;
+            set
+            {
+                degree = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Degree)));
+            }
         }
 
         public int Form
@@ -216,9 +229,12 @@ namespace UniversityApp
                 else
                 {
                     form = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Form)));
                 }
             }
         }
+
+        public TKey Key { get; set; }
 
         public List<Test> Tests
         {
@@ -261,8 +277,8 @@ namespace UniversityApp
             }
         }
 
-        public static IComparer<Student> SortByAvgMark
-        { get { return (IComparer<Student>)new StudentAvgMarkComparer(); } }
+        public static IComparer<Student<TKey>> SortByAvgMark
+        { get { return (IComparer<Student<TKey>>)new StudentAvgMarkComparer<TKey>(); } }
 
         public static IComparer<Person> SortByBirthDate
         { get { return (IComparer<Person>)new Person(); } }

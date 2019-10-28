@@ -11,13 +11,25 @@ namespace UniversityApp
         static void Main(string[] args)
         {
             // 1
-            Student st1 = new Student("Igor", "Zapor", new DateTime(2001, 01, 05), Education.Bachelor, 1);
-            Student st2 = new Student("Rachel", "Sparks", new DateTime(1999, 05, 28), Education.Bachelor, 23);
-            Student st3 = new Student("Dale", "Arden", new DateTime(1959, 05, 23), Education.Specialist, 11);
-            Student st4 = new Student("Vickie", "Kistner", new DateTime(1967, 05, 17), Education.Specialist, 11);
-            Student st5 = new Student("David", "Spillman", new DateTime(1998, 01, 26), Education.Bachelor, 33);
-            Student st6 = new Student("Patricia", "Madden", new DateTime(1975, 07, 31), Education.Specialist, 1);
-            Student st7 = new Student("Caley", "Arden", new DateTime(1959, 05, 23), Education.SecondEducation, 23);
+            Student<string> st1 = new Student<string>("Igor", "Zapor", new DateTime(2001, 01, 05), Education.Bachelor, 1, "one");
+            Student<string> st2 = new Student<string>("Rachel", "Sparks", new DateTime(1999, 05, 28), Education.Bachelor, 23, "two");
+            Student<string> st3 = new Student<string>("Dale", "Arden", new DateTime(1959, 05, 23), Education.Specialist, 11, "three");
+            Student<string> st4 = new Student<string>("Vickie", "Kistner", new DateTime(1967, 05, 17), Education.Specialist, 11, "four");
+            Student<string> st5 = new Student<string>("David", "Spillman", new DateTime(1998, 01, 26), Education.Bachelor, 33, "five");
+            Student<string> st6 = new Student<string>("Patricia", "Madden", new DateTime(1975, 07, 31), Education.Specialist, 1, "six");
+            Student<string> st7 = new Student<string>("Caley", "Arden", new DateTime(1959, 05, 23), Education.SecondEducation, 23, "seven");
+
+            StudentCollection<string> studentCollection1 = new StudentCollection<string>();
+            StudentCollection<string> studentCollection2 = new StudentCollection<string>();
+
+            Journal<string> journal = new Journal<string>();
+            studentCollection1.StudentsChanged += journal.StudentsChanged;
+            studentCollection1.CollectionName = "studentCollection1";
+            studentCollection2.StudentsChanged += journal.StudentsChanged;
+            studentCollection2.CollectionName = "studentCollection2";
+
+            studentCollection1.AddStudents(st1, st2, st3);
+            studentCollection2.AddStudents(st4, st5, st6, st7);
 
             st1.AddExams(new Exam("Calculus", 2, new DateTime(2019, 07, 02)),
                 new Exam("C#", 5, new DateTime(2019, 07, 08)));
@@ -47,56 +59,18 @@ namespace UniversityApp
                 new Exam("C#", 5, new DateTime(2019, 07, 08)));
             st7.AddTests(new Test("C#", true), new Test("Calculus", true));
 
-            StudentCollection students = new StudentCollection();
-            students.AddStudents(st1, st2, st3, st4, st5, st6, st7);
+            st1.Form = 77;
+            st5.Degree = Education.SecondEducation;
 
-            Console.WriteLine("-----------------------------------------------------");
-            Console.WriteLine("***** Students *****");
-            Console.WriteLine("-----------------------------------------------------");
-            Console.WriteLine(students.ToShortString());
+            studentCollection1.Remove(st2);
+            studentCollection2.Remove(st6);
 
-            // 2
-            Console.WriteLine("-----------------------------------------------------");
-            Console.WriteLine("***** Sort by Surname *****");
-            Console.WriteLine("-----------------------------------------------------");
-            students.ListOfStudents.Sort();
+            st2.Form = 50;
+            st6.Degree = Education.Specialist;
 
-            foreach (Student st in students.ListOfStudents)
-            {
-               Console.WriteLine(st.ToShortString());
-            }
-
-            Console.WriteLine("-----------------------------------------------------");
-            Console.WriteLine("***** Sort by Date Birth *****");
-            Console.WriteLine("-----------------------------------------------------");
-            students.ListOfStudents.Sort(Student.SortByBirthDate);
-
-            foreach (Student st in students.ListOfStudents)
-            {
-                Console.WriteLine(st.ToString());
-            }
-            Console.WriteLine("-----------------------------------------------------");
-            Console.WriteLine("***** Sort by Average Mark *****");
-            Console.WriteLine("-----------------------------------------------------");
-            students.ListOfStudents.Sort(Student.SortByAvgMark);
-
-            foreach (Student st in students.ListOfStudents)
-            {
-                Console.WriteLine(st.ToShortString());
-            }
-
-            // 3 
-            Console.WriteLine("Input the number of the elements in the collections: ");
-
-            int num;
-            while(!int.TryParse(Console.ReadLine(), out num))
-            {
-                Console.WriteLine("Wrong input. Only integers. Try again: ");
-            }
-
-            TestCollections test = new TestCollections(num);
-            test.GetSearchTime();
-
+            Console.WriteLine(journal.ToString());
+            Console.WriteLine(studentCollection1.Average());
+            Console.WriteLine(studentCollection2.Average());
             Console.ReadLine();
         }
     }

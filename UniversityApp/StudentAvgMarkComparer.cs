@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace UniversityApp
 {
-    class StudentAvgMarkComparer : IComparer<Student>
+    class StudentAvgMarkComparer<TKey> : IComparer<Student<TKey>>
     {
-        public int Compare(Student s1, Student s2)
+        public int Compare(Student<TKey> s1, Student<TKey> s2)
         {
             if (s1?.AvgMark > s2?.AvgMark)
             {

@@ -1,36 +1,63 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace UniversityApp
 {
-    class StudentCollection
+    class StudentCollection<TKey>
     {
         // Fields
-        private List<Student> listOfStudents = new List<Student>();
+        //private List<Student> dictOfStudents = new List<Student>();
+        Dictionary<TKey, Student<TKey>> dictOfStudents = new Dictionary<TKey, Student<TKey>>();
 
-        // Constructors
-        // Methods
-        public void AddDefaults()
+        public delegate void StudentsChangedEventHandler<TKey>(object source, StudentsChangedEventArgs<TKey> args);
+        public event StudentsChangedEventHandler<TKey> StudentsChanged;
+
+        void PropertyChanged(object sender, PropertyChangedEventArgs args)
         {
-            ListOfStudents.Add(new Student("Judy", "Taylor", new DateTime(1962, 11, 6),
-                Education.Specialist, 5));
-            ListOfStudents.Add(new Student("Omar", "Dar", new DateTime(1992, 5, 21),
-                Education.Bachelor, 3));
-            ListOfStudents.Add(new Student("Evelyn", "Devis", new DateTime(1994, 6, 26),
-                Education.Specialist, 6));
-            ListOfStudents.Add(new Student("So", "Karlin", new DateTime(1975, 1, 11),
-                Education.Bachelor, 2));
+            StudentsChanged.Invoke(sender, new StudentsChangedEventArgs<TKey>
+                (CollectionName, Action.Property, args.PropertyName, (sender as Student<TKey>).Key));
         }
 
-        public void AddStudents(params Student[] students) => ListOfStudents.AddRange(students);
+        // Methods
+        public void AddStudents(params Student<TKey>[] students)
+        {
+            foreach(Student<TKey> st in students)
+            {
+                dictOfStudents.Add(st.Key, st);
+                StudentsChanged?.Invoke(this, new StudentsChangedEventArgs<TKey>
+                    (CollectionName, Action.Add, st.Name, st.Key));
+                st.PropertyChanged += PropertyChanged;
+            }
+        }
+
+        public double Average()
+        {
+            return dictOfStudents.Values.Average(ret => ret.AvgMark);
+        }
+
+        public bool Remove(Student<TKey> st)
+        {
+            foreach (var item in dictOfStudents.Where(kvp => kvp.Value == st).ToList())
+            {
+                dictOfStudents.Remove(item.Key);
+                StudentsChanged?.Invoke(this, new StudentsChangedEventArgs<TKey>
+                    (CollectionName, Action.Remove, st.Name, st.Key));
+                st.PropertyChanged -= PropertyChanged;
+                return true;
+            }
+            return false;
+        }
 
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder(1024);
-            foreach(Student st in ListOfStudents)
+            foreach (var st in dictOfStudents)
             {
                 sb.AppendLine(st.ToString());
             }
@@ -41,15 +68,15 @@ namespace UniversityApp
         public string ToShortString()
         {
             StringBuilder sb = new StringBuilder();
-            foreach(Student st in ListOfStudents)
+            foreach(var st in dictOfStudents)
             {
-                sb.AppendLine(st.ToShortString());
+                sb.AppendLine(st.Value.ToShortString());
             }
 
             return sb.ToString();
         }
 
         // Properties
-        public List<Student> ListOfStudents { get; set; } = new List<Student>();
+        public string CollectionName { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UniversityApp
 {
-    class Test
+    public class Test
     {
         // Constructors
         public Test(string testName, bool isPassed)

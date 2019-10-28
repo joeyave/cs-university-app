@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UniversityApp
 {
-    class Exam : IDateAndCopy
+    public class Exam : IDateAndCopy
     {
         // Properties
         public string Subject { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UniversityApp
 {
-    class Person : IDateAndCopy, IComparable, IComparer<Person>
+    public class Person : IDateAndCopy, IComparable, IComparer<Person>
     {
         // Field Data
         protected string studentName;
