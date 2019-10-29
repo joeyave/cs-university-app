@@ -12,7 +12,6 @@ namespace UniversityApp
     class StudentCollection<TKey>
     {
         // Fields
-        //private List<Student> dictOfStudents = new List<Student>();
         Dictionary<TKey, Student<TKey>> dictOfStudents = new Dictionary<TKey, Student<TKey>>();
 
         public delegate void StudentsChangedEventHandler<TKey>(object source, StudentsChangedEventArgs<TKey> args);

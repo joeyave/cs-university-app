@@ -19,10 +19,6 @@ namespace UniversityApp
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        // This method is called by the Set accessor of ... property.  
-        // The CallerMemberName attribute that is applied to the optional propertyName
-        // parameter causes the property name of the caller to be substituted as an argument.  
-
         // Constructors
         public Student(string stName, string stSurname, DateTime stBirthDate,
             Education stDegree, int stForm, TKey key)
